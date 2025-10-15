@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 export default function PokerHandInput() {
   // === 외부 전송용 Apps Script Web App URL ===
   const SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbxQ-RQQDgm3nTg4NRTcOlkDgiivyLg2GHVNEr7jB0yasxZX3fjor4ENODqobrOhyy7B/exec";
+    "https://script.google.com/macros/s/AKfycbyzh8Mi6BiH5dp47SnZxi5rGrigSWVtLyLSdwolm9fr7Z_QkpuolEpZXnBqruQ2MML2/exec";
 
   // ====== 기본 정보 ======
   const today = new Date().toISOString().slice(0, 10);
@@ -169,19 +169,27 @@ export default function PokerHandInput() {
       },
     };
 
-    try {
-      const res = await fetch(SCRIPT_URL, {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: { "Content-Type": "application/json" },
-      });
-      const text = await res.text();
-      alert("서버 응답: " + text);
-    } catch (err) {
-      console.error("저장 오류:", err);
-      alert("스프레드시트 저장 실패: " + err);
-    }
-  }; 
+   try {
+  const res = await fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "cors", // ✅ 외부 도메인 요청 허용 (필수)
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  // 응답 상태 확인
+  if (!res.ok) {
+    throw new Error(`HTTP error! status: ${res.status}`);
+  }
+
+  const text = await res.text();
+  alert("서버 응답: " + text);
+} catch (err) {
+  console.error("저장 오류:", err);
+  alert("스프레드시트 저장 실패: " + err.message);
+}
 
 
   // ====== UI ======
