@@ -132,7 +132,7 @@ export default function PokerHandInput() {
   const removeAction = (setActions, idx) => setActions((prev) => prev.filter((_, i) => i !== idx));
 
   // ====== 저장 ======
-  const handleSave = async () => {
+    const handleSave = async () => {
     const payload = {
       date,
       gameType,
@@ -169,10 +169,11 @@ export default function PokerHandInput() {
       },
     };
 
-    const jsonString = encodeURIComponent(JSON.stringify(payload));
     try {
-      const res = await fetch(`${SCRIPT_URL}?data=${jsonString}`, {
-        method: "GET",
+      const res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" },
       });
       const text = await res.text();
       alert("서버 응답: " + text);
@@ -180,7 +181,8 @@ export default function PokerHandInput() {
       console.error("저장 오류:", err);
       alert("스프레드시트 저장 실패: " + err);
     }
-  };
+  }; 
+
 
   // ====== UI ======
   return (
