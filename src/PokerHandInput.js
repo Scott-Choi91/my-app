@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 export default function PokerHandInput() {
   // === 외부 전송용 Apps Script Web App URL ===
   const SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbxA5wcUnbKwz75G1ZGQMmHt5BPfDo43iGPPqQG2tFQ7KOkCu1CDmdiWsKJ1WnrDU2_7/exec";
+    "https://script.google.com/macros/s/AKfycbxQ-RQQDgm3nTg4NRTcOlkDgiivyLg2GHVNEr7jB0yasxZX3fjor4ENODqobrOhyy7B/exec";
 
   // ====== 기본 정보 ======
   const today = new Date().toISOString().slice(0, 10);
